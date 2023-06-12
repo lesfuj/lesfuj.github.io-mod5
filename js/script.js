@@ -83,7 +83,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
 showLoading("#main-content");
 $ajaxUtils.sendGetRequest(
   allCategoriesUrl,
-  buildAndShowHomeHTML, // ***** <---- TODO: STEP 1: Substitute [...] ******
+  function (categories) {
+  buildAndShowHomeHTML(categories);
+  }, // ***** <---- TODO: STEP 1: Substitute [...] ******
   true); // Explicitely setting the flag to get JSON from server processed into an object literal
 });
 // *** finish **
@@ -118,7 +120,7 @@ function buildAndShowHomeHTML (categories) {
       //
       // var homeHtmlToInsertIntoMainPage = ....
       chosenCategoryShortName = "'" + chosenCategoryShortName + "'";
-      var homeHtmlToInsertIntoMainPage = insertProperty(homeHtml, "randomCategoryShortName", chosenCategoryShortName);
+      var homeHtmlToInsertIntoMainPage = insertProperty(homeHtml, "randomCategoryShortName", "'" + chosenCategoryShortName + "'");
 
 
       // TODO: STEP 4: Insert the the produced HTML in STEP 3 into the main page
@@ -156,7 +158,7 @@ dc.loadMenuCategories = function () {
 dc.loadMenuItems = function (categoryShort) {
   showLoading("#main-content");
   $ajaxUtils.sendGetRequest(
-    menuItemsUrl + categoryShort,
+    menuItemsUrl + categoryShort + ".json",
     buildAndShowMenuItemsHTML);
 };
 
